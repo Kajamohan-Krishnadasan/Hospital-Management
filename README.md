@@ -188,6 +188,7 @@ imports: [
 
 - create loading component
   **ng g c components/loading**
+
   this component will be used to show loading animation when the login or singout is in progress.
 
 - create login component
@@ -228,4 +229,5 @@ imports: [
 
 - create auth guard
   **ng g g shared/guards/auth**
+
   here we will check if the user is logged in or not.
