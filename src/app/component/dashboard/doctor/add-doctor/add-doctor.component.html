@@ -1,0 +1,171 @@
+<h2 mat-dialog-title>{{ this.title }}</h2>
+<mat-divider></mat-divider>
+
+<mat-dialog-content [formGroup]="formRef">
+  <mat-grid-list cols="2">
+    <!-- 1st Column -->
+    <mat-grid-tile>
+      <div>
+        <!-- input field for name -->
+        <mat-form-field>
+          <mat-label>Full Name</mat-label>
+          <input
+            matInput
+            required
+            placeholder="Full name"
+            formControlName="name"
+          />
+          <mat-error
+            *ngIf="
+              formRef.get('name')?.invalid ||
+              formRef.get('name')?.touched ||
+              formRef.get('name')?.dirty
+            "
+          >
+            Full Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input field for Mobile Number -->
+        <mat-form-field>
+          <mat-label>Mobile Number</mat-label>
+          <input
+            matInput
+            required
+            placeholder="94771234567"
+            formControlName="mobile"
+          />
+          <mat-error
+            *ngIf="
+              formRef.get('mobile')?.invalid ||
+              formRef.get('mobile')?.touched ||
+              formRef.get('mobile')?.dirty
+            "
+          >
+            Mobile Number is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input field for Email -->
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            required
+            placeholder="example@example.com"
+            formControlName="email"
+          />
+          <mat-error
+            *ngIf="
+              formRef.get('email')?.invalid ||
+              formRef.get('email')?.touched ||
+              formRef.get('email')?.dirty
+            "
+          >
+            Email is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input field for Qualification -->
+        <mat-form-field>
+          <mat-label>Qualification</mat-label>
+          <input
+            matInput
+            required
+            placeholder="ex. MBBS"
+            formControlName="qualification"
+          />
+          <mat-error
+            *ngIf="
+              formRef.get('qualification')?.invalid ||
+              formRef.get('qualification')?.touched ||
+              formRef.get('qualification')?.dirty
+            "
+          >
+            Qualification is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <!-- 2nd Column -->
+    <mat-grid-tile>
+      <div>
+        <mat-label>Gender</mat-label> <br />
+        <mat-radio-group
+          aria-label="Select a gender"
+          color="primary"
+          formControlName="gender"
+        >
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+          <mat-radio-button value="other">Other</mat-radio-button>
+        </mat-radio-group>
+
+        <!-- Department -->
+        <mat-form-field>
+          <mat-label>Department</mat-label>
+          <mat-select formControlName="department" name="department">
+            <mat-option
+              *ngFor="let department of departments"
+              [value]="department"
+            >
+              {{ department }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error
+            *ngIf="
+              formRef.get('department')?.invalid ||
+              formRef.get('department')?.touched ||
+              formRef.get('department')?.dirty
+            "
+          >
+            Department is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Date -->
+        <mat-form-field>
+          <mat-label>Birthdate</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerRef"
+            formControlName="birthdate"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="pickerRef">
+          </mat-datepicker-toggle>
+
+          <mat-datepicker #pickerRef></mat-datepicker>
+
+          <mat-error
+            *ngIf="
+              formRef.get('birthdate')?.invalid ||
+              formRef.get('birthdate')?.touched ||
+              formRef.get('birthdate')?.dirty
+            "
+          >
+            Birthdate is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-dialog-content>
+
+<div mat-dialog-actions class="mb-2 mx-2">
+  <button mat-raised-button mat-dialog-close (click)="cancelRegistration()">
+    Cancel
+  </button>
+
+  <button
+    mat-raised-button
+    mat-dialog-close
+    color="primary"
+    (click)="registerDoctor()"
+    [disabled]="formRef.invalid"
+  >
+    {{ buttonName }}
+  </button>
+</div>

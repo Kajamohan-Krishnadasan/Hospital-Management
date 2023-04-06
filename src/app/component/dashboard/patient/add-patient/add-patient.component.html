@@ -1,0 +1,151 @@
+<h2 mat-dialog-title>{{ this.title }}</h2>
+<mat-divider></mat-divider>
+
+<mat-dialog-content [formGroup]="formRef">
+  <mat-grid-list cols="2">
+    <!-- 1st Column -->
+    <mat-grid-tile>
+      <div>
+        <!-- input field for name -->
+        <mat-form-field>
+          <mat-label>Full Name</mat-label>
+          <input
+            matInput
+            required
+            placeholder="Full name"
+            formControlName="patient_name"
+          />
+          <mat-error
+            *ngIf="
+              formRef.get('patient_name')?.invalid ||
+              formRef.get('patient_name')?.touched ||
+              formRef.get('patient_name')?.dirty
+            "
+          >
+            Full Name is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input field for Mobile Number -->
+        <mat-form-field>
+          <mat-label>Mobile Number</mat-label>
+          <input
+            matInput
+            required
+            placeholder="94771234567"
+            formControlName="mobile"
+          />
+          <mat-error
+            *ngIf="
+              formRef.get('mobile')?.invalid ||
+              formRef.get('mobile')?.touched ||
+              formRef.get('mobile')?.dirty
+            "
+          >
+            Mobile Number is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- input field for prescription -->
+        <mat-form-field>
+          <mat-label>Prescription</mat-label>
+          <input
+            matInput
+            required
+            placeholder="ex. Medicines"
+            formControlName="prescription"
+          />
+          <mat-error
+            *ngIf="
+              formRef.get('prescription')?.invalid ||
+              formRef.get('prescription')?.touched ||
+              formRef.get('prescription')?.dirty
+            "
+          >
+            Prescription is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <!-- 2nd Column -->
+    <mat-grid-tile>
+      <div>
+        <mat-label>Gender</mat-label> <br />
+        <mat-radio-group
+          aria-label="Select a gender"
+          color="primary"
+          formControlName="gender"
+        >
+          <mat-radio-button value="male">Male</mat-radio-button>
+          <mat-radio-button value="female">Female</mat-radio-button>
+          <mat-radio-button value="other">Other</mat-radio-button>
+        </mat-radio-group>
+
+        <!-- Doctor -->
+        <mat-form-field>
+          <mat-label>Doctor</mat-label>
+          <mat-select formControlName="doctor_id" name="doctor_id">
+            <mat-option
+              *ngFor="let doctor of allDoctors"
+              [value]="doctor.doctor_id"
+            >
+              {{ doctor.doctor_name }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error
+            *ngIf="
+              formRef.get('doctor_id')?.invalid ||
+              formRef.get('doctor_id')?.touched ||
+              formRef.get('doctor_id')?.dirty
+            "
+          >
+            Doctor is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Date -->
+        <mat-form-field>
+          <mat-label>Admission Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerRef"
+            formControlName="admission_date"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="pickerRef">
+          </mat-datepicker-toggle>
+
+          <mat-datepicker #pickerRef></mat-datepicker>
+
+          <mat-error
+            *ngIf="
+              formRef.get('admission_date')?.invalid ||
+              formRef.get('admission_date')?.touched ||
+              formRef.get('admission_date')?.dirty
+            "
+          >
+            Admission Date is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-dialog-content>
+
+<div mat-dialog-actions class="mb-2 mx-2">
+  <button mat-raised-button mat-dialog-close (click)="cancelRegistration()">
+    Cancel
+  </button>
+
+  <button
+    mat-raised-button
+    mat-dialog-close
+    color="primary"
+    (click)="registerPatient()"
+    [disabled]="formRef.invalid"
+  >
+    {{ buttonName }}
+  </button>
+</div>
